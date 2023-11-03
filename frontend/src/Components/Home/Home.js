@@ -14,7 +14,7 @@ const Home = props => {
         town: "",
         gender: "Male"
     })
-
+    const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
 
     const handleFirstName = event => setCredentials({ ...credentials, firstname:event.target.value });
@@ -23,7 +23,9 @@ const Home = props => {
     const handleTown = event => setCredentials({ ...credentials, town:event.target.value });
     const handleGender = event => setCredentials({ ...credentials, gender:event.target.value });
 
-    const handleSubmit = () => {
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        setLoading(true)
         toast.promise (axios.post(process.env.REACT_APP_API_URL + '/api/v1/accounts/', credentials, {
             headers: {
                 "Content-Type": "application/json"
@@ -34,8 +36,9 @@ const Home = props => {
                 navigate("/users")
             },
             error: (error) => {
-                
-                return error.response.data.lastname[0];
+                setLoading(false)
+                let values = Object.values(error.response.data)
+                return values;
             }
         })
         
@@ -45,7 +48,7 @@ const Home = props => {
             <Toaster />
             <div>Welcome to MY APP</div>
             <p>To view users, click the following link <Link to="/users">users</Link> </p>
-        <form onSubmit={(e => e.preventDefault())}>
+        <form onSubmit={(e) => handleSubmit(e)}>
             <div>
                 <div>
                     <label>Enter your firstname*</label>
@@ -74,7 +77,7 @@ const Home = props => {
                     </select>
                 </div>
             </div>
-            <button onClick={handleSubmit}>submit</button>
+            <button disabled={loading}>submit</button>
             
         </form>
         </React.Fragment>

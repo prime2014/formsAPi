@@ -56,7 +56,8 @@ const View = () => {
         fetchData()
     },[])
 
-    const handleUpdate = () => {
+    const handleUpdate = (e) => {
+        e.preventDefault()
         toast.promise(axios.put(process.env.REACT_APP_API_URL + `/api/v1/accounts/${credentials.id}/`, credentials, {
             headers: {
                 "Content-Type": "application/json"
@@ -129,7 +130,7 @@ const View = () => {
         <div>
             <Toaster />
             <Dialog header="Header" visible={visible} style={{ width: '50vw' }} onHide={() => setVisible(false)}>
-                <form onSubmit={e=> e.preventDefault()}>
+                <form onSubmit={e=> handleUpdate(e)}>
                 <div>
                     <p>Update</p>
                     <div>
@@ -159,7 +160,7 @@ const View = () => {
                     </select>
                 </div>
             </div>
-            <button onClick={handleUpdate}>update</button>
+            <button>update</button>
             </form>
             </Dialog>
             <Dialog header="Confirm" visible={deleteVisible} style={{ width: '50vw' }} onHide={() => setDeleteVisible(false)}>

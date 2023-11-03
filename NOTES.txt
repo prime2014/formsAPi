@@ -1,0 +1,38 @@
+#NOTE: The database being used is postgres. 
+the crednetials in the formsApi/.env might need to be changed if testing locally with a present postgres database
+The database 'services' will need to be created before anything
+change the URL alone since it is the one django is using
+for the USER & PASSWORD
+
+postgres://<user>:<password>@localhost:5432/services
+
+
+run python from the formsApi directory
+
+cd  formsApi
+
+create virtualenv 
+    - python -m venv venv
+
+run this command to activate venv
+ - venv/Scripts/activate
+
+install dependencies python
+    - pip install -r requirements.txt
+
+
+run commands:
+    - python manage.py makemigrations
+    - python manage.py migrate
+
+ to start the python server
+    - python manage.py runserver 0.0.0.0:8000
+
+
+to run react navigate to directory
+cd formsApi/frontend
+
+run npm install
+
+run npm start
+
